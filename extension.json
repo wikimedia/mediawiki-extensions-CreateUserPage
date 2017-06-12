@@ -1,0 +1,28 @@
+{
+	"name": "CreateUserPage",
+	"version": "1.0",
+	"author": [
+		"[https://www.mediawiki.org/wiki/User:Cindy.cicalese Cindy Cicalese]"
+	],
+	"url": "https://www.mediawiki.org/wiki/Extension:Create_User_Page",
+	"descriptionmsg": "createuserpage-desc",
+	"license-name": "MIT",
+	"type": "other",
+	"MessagesDirs": {
+		"CreateUserPage": [
+			"i18n"
+		]
+	},
+	"AutoloadClasses": {
+		"CreateUserPageHooks": "includes/CreateUserPageHooks.php"
+	},
+	"Hooks": {
+		"UserLoginComplete": [
+			"CreateUserPageHooks::checkForUserPage"
+		]
+	},
+	"config": {
+		"CreateUserPage_PageContent": "{{User}}"
+	},
+	"manifest_version": 1
+}
