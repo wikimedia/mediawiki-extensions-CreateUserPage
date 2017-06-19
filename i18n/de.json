@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"Metalhead64"
+		]
+	},
+	"createuserpage-desc": "Erstellt eine Benutzerseite für einen Benutzer, falls diese bei der Anmeldung des Benutzers nicht vorhanden ist."
+}
