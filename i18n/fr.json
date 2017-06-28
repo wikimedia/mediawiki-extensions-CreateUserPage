@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"Wladek92"
+		]
+	},
+	"createuserpage-desc": "Créer la page personnelle d'un utilisateur si elle n'existe pas quand celui-ci se connecte."
+}
