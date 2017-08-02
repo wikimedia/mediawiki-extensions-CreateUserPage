@@ -28,9 +28,8 @@ class CreateUserPageHooks {
 		$title = Title::newFromText( 'User:' . $user->mName );
 		if ( !is_null( $title ) && !$title->exists() ) {
 			$page = new WikiPage( $title );
-			$page->doEdit( $GLOBALS['wgCreateUserPage_PageContent'],
-				'create user page', EDIT_NEW);
+			$pageContent = new TextContent( $GLOBALS['wgCreateUserPage_PageContent'] );
+			$page->doEditContent( $pageContent, 'create user page', EDIT_NEW);
 		}
-		return true;
 	}
 }
