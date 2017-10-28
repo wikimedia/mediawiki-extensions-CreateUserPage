@@ -1,35 +1,42 @@
 <?php
 
-/*
- * Copyright (c) 2017 The MITRE Corporation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a
- * copy of this software and associated documentation files (the "Software"),
- * to deal in the Software without restriction, including without limitation
- * the rights to use, copy, modify, merge, publish, distribute, sublicense,
- * and/or sell copies of the Software, and to permit persons to whom the
- * Software is furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
- * DEALINGS IN THE SOFTWARE.
- */
-
 class CreateUserPageHooks {
 
-	public static function checkForUserPage( &$user, &$inject_html ) {
+	/**
+	 * Implements UserLoginComplete hook.
+	 * See https://www.mediawiki.org/wiki/Manual:Hooks/UserLoginComplete
+	 * Check for existence of user page if $wgCreateUserPage_OnLogin is true
+	 *
+	 * @param User &$user the user object that was create on login
+	 * @param string &$inject_html any HTML to inject after the login success message
+	 */
+	public static function onUserLoginComplete( User &$user, &$inject_html ) {
+		if ( $GLOBALS["wgCreateUserPage_OnLogin"] ) {
+			self::checkForUserPage( $user );
+		}
+	}
+
+	/**
+	 * Implements OutputPageParserOutput hook.
+	 * See https://www.mediawiki.org/wiki/Manual:Hooks/OutputPageParserOutput
+	 * Check for existence of user page if $wgCreateUserPage_OnLogin is fale
+	 *
+	 * @param OutputPage &$out the OutputPage object to which wikitext is added
+	 * @param ParserOutput $parseroutput a PaerserOutput object
+	 */
+	public static function onOutputPageParserOutput( OutputPage &$out,
+		ParserOutput $parseroutput ) {
+		if ( !$GLOBALS["wgCreateUserPage_OnLogin"] ) {
+			self::checkForUserPage( $out->getUser() );
+		}
+	}
+
+	private static function checkForUserPage( User $user ) {
 		$title = Title::newFromText( 'User:' . $user->mName );
 		if ( !is_null( $title ) && !$title->exists() ) {
 			$page = new WikiPage( $title );
 			$pageContent = new WikitextContent( $GLOBALS['wgCreateUserPage_PageContent'] );
-			$page->doEditContent( $pageContent, 'create user page', EDIT_NEW);
+			$page->doEditContent( $pageContent, 'create user page', EDIT_NEW );
 		}
 	}
 }
