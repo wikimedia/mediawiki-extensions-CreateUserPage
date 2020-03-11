@@ -17,12 +17,8 @@
 		"CreateUserPageHooks": "includes/CreateUserPageHooks.php"
 	},
 	"Hooks": {
-		"UserLoginComplete": [
-			"CreateUserPageHooks::onUserLoginComplete"
-		],
-		"OutputPageParserOutput": [
-			"CreateUserPageHooks::onOutputPageParserOutput"
-		]
+		"UserLoginComplete": "CreateUserPageHooks::onUserLoginComplete",
+		"OutputPageParserOutput": "CreateUserPageHooks::onOutputPageParserOutput"
 	},
 	"config": {
 		"CreateUserPage_PageContent": "{{User}}",
