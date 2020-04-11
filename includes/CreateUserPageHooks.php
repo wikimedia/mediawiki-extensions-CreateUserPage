@@ -32,11 +32,23 @@ class CreateUserPageHooks {
 	}
 
 	private static function checkForUserPage( User $user ) {
+		if ( $GLOBALS["wgCreateUserPage_AutoCreateUser"] ) {
+			wfDebugLog( 'CreateUserPage', 'AutoCreateUser: ' .
+				$GLOBALS["wgCreateUserPage_AutoCreateUser"] );
+			$autoCreateUser = User::newFromName( $GLOBALS["wgCreateUserPage_AutoCreateUser"] );
+			if ( $autoCreateUser == false ) {
+				wfDebugLog( 'CreateUserPage',
+					'AutoCreateUser invalid, using logged in user instead.' );
+				$autoCreateUser = $user;
+			}
+		} else {
+			$autoCreateUser = $user;
+		}
 		$title = Title::newFromText( 'User:' . $user->mName );
 		if ( $title !== null && !$title->exists() ) {
 			$page = new WikiPage( $title );
 			$pageContent = new WikitextContent( $GLOBALS['wgCreateUserPage_PageContent'] );
-			$page->doEditContent( $pageContent, 'create user page', EDIT_NEW );
+			$page->doEditContent( $pageContent, 'create user page', EDIT_NEW, false, $autoCreateUser );
 		}
 	}
 }
