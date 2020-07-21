@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Srdjan m"
+			"Srdjan m",
+			"Srđan"
 		]
 	},
 	"createuserpage-desc": "Stvara korisničku stranicu ako ne postoji kada se korisnik prijavi."
