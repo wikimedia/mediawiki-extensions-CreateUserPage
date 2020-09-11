@@ -1,8 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
-			"Hedda"
+			"Hedda",
+			"MuratTheTurkish"
 		]
 	},
-	"createuserpage-desc": "Kullanıcı giriş yaptığında mevcut değilse kullanıcı için kullanıcı sayfası oluşturun"
+	"createuserpage-desc": "Kullanıcı oturum açtığında mevcut değilse bir kullanıcı için kullanıcı sayfası oluşturun"
 }
