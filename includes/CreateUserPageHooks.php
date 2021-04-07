@@ -31,6 +31,9 @@ class CreateUserPageHooks {
 		}
 	}
 
+	/**
+	 * @param User $user
+	 */
 	private static function checkForUserPage( User $user ) {
 		if ( $GLOBALS["wgCreateUserPage_AutoCreateUser"] ) {
 			wfDebugLog( 'CreateUserPage', 'AutoCreateUser: ' .
