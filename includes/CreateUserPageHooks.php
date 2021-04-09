@@ -26,8 +26,9 @@ class CreateUserPageHooks {
 	 */
 	public static function onOutputPageParserOutput( OutputPage &$out,
 		ParserOutput $parseroutput ) {
-		if ( !$GLOBALS["wgCreateUserPage_OnLogin"] ) {
-			self::checkForUserPage( $out->getUser() );
+		$user = $out->getUser();
+		if ( !$GLOBALS["wgCreateUserPage_OnLogin"] && !$user->isAnon() ) {
+			self::checkForUserPage( $user );
 		}
 	}
 
