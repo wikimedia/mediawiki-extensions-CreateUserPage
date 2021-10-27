@@ -1,5 +1,8 @@
 <?php
 
+use MediaWiki\MediaWikiServices;
+use MediaWiki\Revision\SlotRecord;
+
 class CreateUserPageHooks {
 
 	/**
@@ -36,12 +39,11 @@ class CreateUserPageHooks {
 	 */
 	private static function checkForUserPage( User $user ) {
 		if ( $GLOBALS["wgCreateUserPage_AutoCreateUser"] ) {
-			wfDebugLog( 'CreateUserPage', 'AutoCreateUser: ' .
-				$GLOBALS["wgCreateUserPage_AutoCreateUser"] );
-			$autoCreateUser = User::newFromName( $GLOBALS["wgCreateUserPage_AutoCreateUser"] );
+			$username = $GLOBALS["wgCreateUserPage_AutoCreateUser"];
+			wfDebugLog( 'CreateUserPage', 'AutoCreateUser: ' . $username );
+			$autoCreateUser = MediaWikiServices::getInstance()->getUserFactory()->newFromName( $username );
 			if ( $autoCreateUser == false ) {
-				wfDebugLog( 'CreateUserPage',
-					'AutoCreateUser invalid, using logged in user instead.' );
+				wfDebugLog( 'CreateUserPage', 'AutoCreateUser invalid, using logged in user instead.' );
 				$autoCreateUser = $user;
 			}
 		} else {
@@ -50,8 +52,11 @@ class CreateUserPageHooks {
 		$title = Title::newFromText( 'User:' . $user->mName );
 		if ( $title !== null && !$title->exists() ) {
 			$page = new WikiPage( $title );
+			$updater = $page->newPageUpdater( $autoCreateUser );
 			$pageContent = new WikitextContent( $GLOBALS['wgCreateUserPage_PageContent'] );
-			$page->doEditContent( $pageContent, 'create user page', EDIT_NEW, false, $autoCreateUser );
+			$updater->setContent( SlotRecord::MAIN, $pageContent );
+			$edit_summary = CommentStoreComment::newUnsavedComment( 'create user page' );
+			$updater->saveRevision( $edit_summary, EDIT_NEW );
 		}
 	}
 }
