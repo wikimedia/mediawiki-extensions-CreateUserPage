@@ -22,7 +22,7 @@ class CreateUserPageHooks {
 	/**
 	 * Implements OutputPageParserOutput hook.
 	 * See https://www.mediawiki.org/wiki/Manual:Hooks/OutputPageParserOutput
-	 * Check for existence of user page if $wgCreateUserPage_OnLogin is fale
+	 * Check for existence of user page if $wgCreateUserPage_OnLogin is false
 	 *
 	 * @param OutputPage &$out the OutputPage object to which wikitext is added
 	 * @param ParserOutput $parseroutput a PaerserOutput object
