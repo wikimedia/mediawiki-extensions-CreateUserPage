@@ -8,6 +8,9 @@
 	"descriptionmsg": "createuserpage-desc",
 	"license-name": "MIT",
 	"type": "other",
+	"requires": {
+		"MediaWiki": ">= 1.35.0"
+	},
 	"MessagesDirs": {
 		"CreateUserPage": [
 			"i18n"
