@@ -52,7 +52,12 @@ class CreateUserPageHooks {
 		}
 		$title = Title::newFromText( 'User:' . $user->mName );
 		if ( $title !== null && !$title->exists() ) {
-			$page = new WikiPage( $title );
+			if ( method_exists( MediaWikiServices::class, 'getWikiPageFactory' ) ) {
+				// MW 1.36+
+				$page = MediaWikiServices::getInstance()->getWikiPageFactory()->newFromTitle( $title );
+			} else {
+				$page = new WikiPage( $title );
+			}
 			$updater = $page->newPageUpdater( $autoCreateUser );
 			$pageContent = new WikitextContent( $GLOBALS['wgCreateUserPage_PageContent'] );
 			$updater->setContent( SlotRecord::MAIN, $pageContent );
