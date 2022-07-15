@@ -64,5 +64,21 @@ class CreateUserPageHooks {
 			$edit_summary = CommentStoreComment::newUnsavedComment( 'create user page' );
 			$updater->saveRevision( $edit_summary, EDIT_NEW );
 		}
+		if ( $GLOBALS["wgCreateUserPage_CreateRedirect"] ) {
+			$title = Title::newFromText( $user->mName );
+			if ( $title !== null && !$title->exists() ) {
+			if ( method_exists( MediaWikiServices::class, 'getWikiPageFactory' ) ) {
+				// MW 1.36+
+				$page = MediaWikiServices::getInstance()->getWikiPageFactory()->newFromTitle( $title );
+			} else {
+				$page = new WikiPage( $title );
+			}
+			$updater = $page->newPageUpdater( $autoCreateUser );
+			$pageContent = new WikitextContent( '#REDIRECT [[User:' . $user->mName . ']]' );
+			$updater->setContent( SlotRecord::MAIN, $pageContent );
+			$edit_summary = CommentStoreComment::newUnsavedComment( 'created redirect for user page' );
+			$updater->saveRevision( $edit_summary, EDIT_NEW );
+			}
+		}
 	}
 }
