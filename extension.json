@@ -26,7 +26,8 @@
 	"config": {
 		"CreateUserPage_PageContent": "{{User}}",
 		"CreateUserPage_OnLogin": true,
-		"CreateUserPage_AutoCreateUser": null
+		"CreateUserPage_AutoCreateUser": null,
+		"CreateUserPage_CreateRedirect": false
 	},
 	"manifest_version": 1
 }
