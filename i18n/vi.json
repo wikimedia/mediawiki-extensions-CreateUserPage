@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"SongNgu.xyz"
+		]
+	},
+	"createuserpage-desc": "Tạo trang người dùng cho người dùng nếu trang đó không tồn tại khi người dùng đăng nhập"
+}
